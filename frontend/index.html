@@ -11,12 +11,13 @@
             rel="stylesheet"
         />
         <link rel="stylesheet" href="/styles.css" />
+
         <link rel="manifest" href="/manifest.json" />
 
-        <!-- iOS doesn't support the manifest file -->
+        <!-- iOS below version 15 doesn't support the manifest file -->
         <!-- so we have to provide these to get similar results -->
         <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="#14b8a6" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="#0d9488" />
         <meta name="apple-mobile-web-app-title" content="Superheroes" />
         <link
             rel="apple-touch-icon"
@@ -28,6 +29,7 @@
             href="/assets/icons/icon-512x512.png"
             sizes="512x512"
         />
+        <script type="module" src="/src/main.js"></script>
     </head>
     <body>
         <header
@@ -51,7 +53,8 @@
         <div id="router" class="pt-20 p-3"></div>
 
         <div
-            class="offline-snackbar opacity-0 duration-300 flex justify-center"
+            id="offline-snackbar"
+            class="opacity-0 duration-300 flex justify-center"
         >
             <div
                 class="p-2 rounded bg-gray-800 fixed bottom-2 w-full max-w-sm text-gray-100 flex items-center"
@@ -65,7 +68,5 @@
             id="up-button"
             class="bx bx-chevron-up opacity-0 duration-300 shadow-md fixed right-5 bottom-5 bg-gradient-to-b from-teal-600 to-teal-400 rounded-full p-2 text-4xl leading-none text-white"
         ></i>
-
-        <script type="module" src="/src/main.js"></script>
     </body>
 </html>
