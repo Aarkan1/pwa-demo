@@ -2,20 +2,68 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
-        <link rel="icon" type="image/svg+xml" href="/src/favicon.svg" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Skurups Taekwon-Do klubb</title>
+        <title>Superheroes</title>
+        <script src="https://cdn.tailwindcss.com"></script>
         <link
+            href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css"
             rel="stylesheet"
-            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+        />
+        <link rel="stylesheet" href="/styles.css" />
+        <link rel="manifest" href="/manifest.json" />
+
+        <!-- iOS doesn't support the manifest file -->
+        <!-- so we have to provide these to get similar results -->
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="#14b8a6" />
+        <meta name="apple-mobile-web-app-title" content="Superheroes" />
+        <link
+            rel="apple-touch-icon"
+            href="/assets/icons/icon-192x192.png"
+            sizes="192x192"
         />
         <link
-            rel="stylesheet"
-            href="https://fonts.googleapis.com/icon?family=Material+Icons"
+            rel="apple-touch-icon"
+            href="/assets/icons/icon-512x512.png"
+            sizes="512x512"
         />
     </head>
     <body>
-        <div id="root"></div>
-        <script type="module" src="/src/main.tsx"></script>
+        <header
+            class="bg-gradient-to-b from-teal-600 to-teal-400 p-3 fixed w-full shadow-md z-10 text-white"
+        >
+            <nav class="flex items-center text-center md:text-left">
+                <i
+                    id="back-button"
+                    class="bx bx-left-arrow-alt md:hidden text-4xl leading-none cursor-pointer"
+                ></i>
+                <a href="/" class="flex-1 text-2xl font-medium">Superheroes</a>
+                <i
+                    title="install"
+                    id="install-button"
+                    class="bx bx-import text-3xl cursor-pointer invisible"
+                ></i>
+            </nav>
+        </header>
+
+        <!-- div where the routes gets injected -->
+        <div id="router" class="pt-20 p-3"></div>
+
+        <div class="offline-snackbar flex justify-center">
+            <div
+                class="p-2 rounded bg-gray-800 fixed bottom-2 w-full max-w-sm text-gray-100 flex items-center"
+            >
+                <i class="bx bx-wifi-off text-2xl ml-1 mr-3"></i>
+                <p>No network available</p>
+            </div>
+        </div>
+
+        <i
+            id="up-button"
+            class="bx bx-chevron-up shadow-md fixed right-5 bottom-5 bg-gradient-to-b from-teal-600 to-teal-400 rounded-full p-2 text-4xl leading-none text-white"
+        ></i>
+
+        <script type="module" src="/src/main.js"></script>
     </body>
 </html>
