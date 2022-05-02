@@ -3,9 +3,3 @@
     /* remove mobile touch highlighting */
     -webkit-tap-highlight-color: transparent;
 }
-
-.bx-chevron-up,
-.offline-snackbar {
-    opacity: 0;
-    transition-duration: 300ms;
-}

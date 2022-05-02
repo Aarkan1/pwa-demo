@@ -51,8 +51,12 @@ const networkFirst = async (e) => {
 // listener for intercepting outgoing fetch requests,
 // and here is were we handle dynamic caching
 self.addEventListener("fetch", (e) => {
-    // we only want to cache GET responses
-    if (e.request.method !== "GET") return;
+    // we only want to cache GET responses, and let browser handle image cache
+    if (
+        e.request.method !== "GET" ||
+        (!e.request.url.includes("fallback") && e.request.url.endsWith(".jpg"))
+    )
+        return;
     // respondWith() works like waitUntil(), but returns something to the client
     e.respondWith(networkFirst(e));
 });
