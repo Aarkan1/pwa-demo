@@ -1,4 +1,4 @@
-export const details = async (id) => {
+export const details = async ({ id }) => {
     let hero;
 
     const fetchHero = async () => {

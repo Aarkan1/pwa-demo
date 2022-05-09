@@ -1,16 +1,32 @@
-import { home } from "./pages/home.js";
-import { details } from "./pages/details.js";
-
-// route to component mapping
-const routes = {
-    "/": home,
-    "/hero": details,
-};
-
-const root = document.querySelector("#router");
-
+// router variables
+let globalRoutes;
+let rootElement;
 let oldRoute = null;
 let oldUrl = "";
+const regexMapping = new Map();
+
+// map route to regex
+const routeToRegex = (route) =>
+    new RegExp("^" + route.replace(/:[-%\w]+/g, "([-%\\w]+)") + "$");
+
+// map keys and values from matched route
+const getParams = (match) => {
+    const values = match.match.slice(1);
+    const keys = Array.from(match.route.matchAll(/:([-%\w]+)/g)).map(
+        (res) => res[1]
+    );
+    return Object.fromEntries(keys.map((key, i) => [key, values[i]]));
+};
+
+// get match and original route from matching regex
+const matchingRoute = (route) => {
+    for (let [reg, r] of regexMapping.entries()) {
+        const match = route.match(reg);
+        if (match) {
+            return { match, route: r };
+        }
+    }
+};
 
 // soft route changes
 export const updateRoute = async (route, params = "") => {
@@ -22,17 +38,18 @@ export const updateRoute = async (route, params = "") => {
     if (oldRoute && oldRoute.onUnmount) oldRoute.onUnmount();
 
     let newRoute;
-    // extract id from path params
-    if (route.startsWith("/hero")) {
-        const id = route.replace("/hero/", "");
-        newRoute = await routes["/hero"](id);
+    const match = matchingRoute(route);
+    if (!match) {
+        // render 404 route if non are matching
+        newRoute = await globalRoutes[404]();
     } else {
-        newRoute = await routes[route]();
+        newRoute = await globalRoutes[match.route](getParams(match));
     }
+
     oldRoute = newRoute;
     // render the new route
-    root.innerHTML = newRoute.render;
-    // and trigger the new routes onMounted-function
+    rootElement.innerHTML = newRoute.render;
+    // and trigger the new route onMounted-function
     newRoute.onMounted && newRoute.onMounted();
 };
 
@@ -47,7 +64,23 @@ export const pushRoute = async (route, params = "") => {
 // do soft route changes based on href.
 // also listen on popstate to handle soft route changes
 // when user traverse the history
-const initRouter = () => {
+export const initRouter = (routes, root) => {
+    if (globalRoutes) throw new Error("Router already initialized!");
+    globalRoutes = routes;
+
+    // create regex patterns for each route
+    Object.keys(routes).forEach((key) => {
+        regexMapping.set(routeToRegex(key), key);
+    });
+
+    if (root) {
+        rootElement = root;
+    } else {
+        rootElement = document.createElement("div");
+        rootElement.id = "router";
+        document.body.appendChild(rootElement);
+    }
+
     updateRoute(location.pathname);
 
     window.addEventListener("popstate", (e) => {
@@ -65,4 +98,3 @@ const initRouter = () => {
         }
     });
 };
-initRouter();
