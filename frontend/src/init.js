@@ -18,8 +18,3 @@ upButton.addEventListener("click", () => {
     if (window.scrollY < 300) return;
     window.scrollTo(0, 0);
 });
-
-if ("serviceWorker" in navigator) {
-    console.log("[PWA] register service worker");
-    navigator.serviceWorker.register("/serviceWorker.js");
-}
