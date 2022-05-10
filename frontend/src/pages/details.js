@@ -27,7 +27,7 @@ export const details = async (id) => {
                 class="w-full max-w-md md:w-80 max-h-96 object-cover rounded drop-shadow-lg mb-3" 
                 src="${hero.image_url}" 
                 alt="hero image"
-                onerror="this.src='/src/hero-fallback.jpg'" 
+                onerror="this.src='/assets/hero-fallback.jpg'" 
             />
             <div class="w-96">
                 <h1 class="text-2xl text-center md:text-left">${hero.name}</h1>
