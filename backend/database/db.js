@@ -1,5 +1,10 @@
 import sqlite from "better-sqlite3";
-const conn = sqlite("database/superheroes.db");
+import { join, dirname } from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const conn = sqlite(join(__dirname, "superheroes.db"));
 
 // db helper methods
 const db = {
