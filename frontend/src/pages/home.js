@@ -8,7 +8,7 @@ const heroCard = (hero) => /*html*/ `
             class="w-full h-60 object-cover" 
             src="${hero.image_url}" 
             alt="hero image"
-            onerror="this.src='/src/hero-fallback.jpg'" 
+            onerror="this.src='/assets/hero-fallback.jpg'" 
         />
         <h2 class="text-xl p-2">${hero.name}</h2>
     </div>
