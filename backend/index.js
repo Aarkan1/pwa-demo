@@ -10,7 +10,7 @@ const __dirname = dirname(__filename);
 dotenv.config();
 
 const app = express();
-const port = process.env.PORT || 7000;
+const port = process.env.PORT || 7500;
 const staticFolder = "../frontend";
 
 app.use("/api", api);
